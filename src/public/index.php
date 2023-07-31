@@ -56,25 +56,25 @@ $container->set(
     }
 );
 
-// $container->setShared('secureController', function () {
-//     return new SecureController();
-// });
+$container->setShared('secureController', function () {
+    return new SecureController();
+});
 
 $application = new Application($container);
 
-// $eventsManager = new EventsManager();
+$eventsManager = new EventsManager();
 
-// $eventsManager->attach(
-//     'application:beforeHandleRequest',
-//     new App\Listeners\NotificationListeners()
-// );
+$eventsManager->attach(
+    'application:beforeHandleRequest',
+    new App\Listeners\NotificationListeners()
+);
 
-// $eventsManager->fire('application:beforeHandleRequest', $application);
+$eventsManager->fire('application:beforeHandleRequest', $application);
 
-// $container->set(
-//     'eventsManager',
-//     $eventsManager
-// );
+$container->set(
+    'eventsManager',
+    $eventsManager
+);
 
 $container->set(
     'db',

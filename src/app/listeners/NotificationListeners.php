@@ -7,6 +7,7 @@ use Phalcon\Mvc\Dispatcher\Exception as DispatchException;
 use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Role;
 use Phalcon\Acl\Component;
+use Phalcon\Acl\Enum;
 // use App\Controllers\SecuresController;
 
 class NotificationListeners 
@@ -44,14 +45,19 @@ class NotificationListeners
                 mkdir($aclDir, 0777, true);
             }
 
+            // $aclFilePath = fopen( $aclDir . '/acl.cache', 'w+' );
             $aclFilePath = $aclDir . '/acl.cache';
 
             if (!is_file($aclFilePath)) {
             // ... (create and setup ACL object as before)
             $acl = new Memory();
-            $acl->addRole('admin');
-            $acl->addRole('customer');
-            $acl->addRole('guest');
+            // $acl->setDefaultAction(Enum::ALLOW);
+            $admin     = new Role('admins', 'Administrator Access');
+            $customer = new Role('customer', 'Manager Department Access');
+            $guest = new Role('guest', 'normal user');
+            $acl->addRole($admin );
+            $acl->addRole($customer);
+            $acl->addRole( $guest);
 
             $acl->addComponent(
                 'products',
@@ -79,15 +85,22 @@ class NotificationListeners
             // Admin will have access to all (product add/edit, order add/edit, settings and all the above pages)
             // manager will have access to product add/edit and order add/edit
             // guest will have access to only product view
+            $acl->allow('*','*','*');
             $acl->allow('admin', '*', '*');
+            $acl->allow('customer', '*', '*');
+            $acl->deny('customer', 'settings','*');
+            $acl->deny('guest', 'products', ['add']);
+            $acl->deny('guest', 'orders', ['add','index']);
+            $acl->deny('guest','settings','index');
+            $acl->allow('guest','products', ['index']);
             $acl->allow('customer', 'products', ['index','add']);
             $acl->allow('customer', 'orders', ['index','add']);
-            $acl->allow('guest', 'products', ['index']);
-            $acl->deny('guest','*','*');
-                // Save the ACL object to the cache file
+            
+            // Save the ACL object to the cache file
             file_put_contents($aclFilePath, serialize($acl));
 
             echo 'ACL data has been created and saved to acl.cache file.';
+            // die();
             }
         }
     }
