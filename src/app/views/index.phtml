@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phalcon Task</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+<div class=''>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="/logo.png" width="30" height="30" alt="MKT">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link font-italic font-weight-bold" href="/products/add">ADD PRODUCT <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link font-italic font-weight-bold" href="/products/index">PRODUCT LISTING<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link font-italic font-weight-bold" href="/orders/add">CREATE ORDER <span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link font-italic font-weight-bold" href="/orders/index">ORDER LISTING<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link font-italic font-weight-bold" href="/settings/index">SETTINGS<span class="sr-only"></span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+</div>
+    <?php echo $this->getContent(); ?>
+</div>
+</body>
+</html>

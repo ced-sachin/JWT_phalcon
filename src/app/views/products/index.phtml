@@ -1,0 +1,27 @@
+<h3 class="text-light bg-dark">Product Listing</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Description</th>
+      <th scope="col">Tag</th>
+      <th scope="col">Price</th>
+      <th scope="col">Stock</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+    <?php foreach($products as $product): ?>
+        <!-- <!?php echo '<pre>'; print_r($product->getProductname()); die('<br>abcdef'); ?> -->
+    <tr>
+      <th scope="row"><?php echo $product->getId(); ?></th>
+      <td><?php echo $product->getProductname(); ?></td>
+      <td><?php echo $product->getDescription(); ?></td>
+      <td><?php echo $product->getTag(); ?></td>
+      <td><?php echo $product->getPrice(); ?></td>
+      <td><?php echo $product->getStock(); ?></td>
+    </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>

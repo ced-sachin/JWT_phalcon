@@ -1,0 +1,25 @@
+<h3 class="text-light bg-dark">Order Listing</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Customer name</th>
+      <th scope="col">Customer Address</th>
+      <th scope="col">Zipcode</th>
+      <th scope="col">Product</th>
+      <th scope="col">Quantity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach($orders as $order): ?>
+      <tr>
+        <th scope="row"><?php echo $order->getId(); ?></th>
+        <td><?php echo $order->getCustomername(); ?></td>
+        <td><?php echo $order->getCustomeraddress(); ?></td>
+        <td><?php echo $order->getZipcode(); ?></td>
+        <td><?php echo $order->getProduct(); ?></td>
+        <td><?php echo $order->getQuantity(); ?></td>
+      </tr>
+    <?php endforeach; ?>
+  </tbody>
+</table>
