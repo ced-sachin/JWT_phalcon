@@ -52,7 +52,7 @@ class NotificationListeners
             // ... (create and setup ACL object as before)
             $acl = new Memory();
             // $acl->setDefaultAction(Enum::ALLOW);
-            $admin     = new Role('admins', 'Administrator Access');
+            $admin     = new Role('admin', 'Administrator Access');
             $customer = new Role('customer', 'Manager Department Access');
             $guest = new Role('guest', 'normal user');
             $acl->addRole($admin );
@@ -62,14 +62,14 @@ class NotificationListeners
             $acl->addComponent(
                 'products',
                 [
-                    'index',
+                    'view',
                     'add'
                 ]
             );
             $acl->addComponent(
                 'orders',
                 [
-                    'index',
+                    'view',
                     'add'
                 ]
             );
@@ -77,7 +77,7 @@ class NotificationListeners
             $acl->addComponent(
                 'settings',
                 [
-                    'index',
+                    'view',
                     'update'
                 ]
             );
@@ -85,22 +85,16 @@ class NotificationListeners
             // Admin will have access to all (product add/edit, order add/edit, settings and all the above pages)
             // manager will have access to product add/edit and order add/edit
             // guest will have access to only product view
-            $acl->allow('*','*','*');
+            // $acl->allow('*','*','*');
             $acl->allow('admin', '*', '*');
-            $acl->allow('customer', '*', '*');
-            $acl->deny('customer', 'settings','*');
-            $acl->deny('guest', 'products', ['add']);
-            $acl->deny('guest', 'orders', ['add','index']);
-            $acl->deny('guest','settings','index');
-            $acl->allow('guest','products', ['index']);
-            $acl->allow('customer', 'products', ['index','add']);
-            $acl->allow('customer', 'orders', ['index','add']);
+            $acl->allow('guest', 'products' , ['view']);
+            $acl->allow('customer', 'products' , '*');
+            $acl->allow('customer', 'orders' ,  '*');
             
             // Save the ACL object to the cache file
             file_put_contents($aclFilePath, serialize($acl));
 
             echo 'ACL data has been created and saved to acl.cache file.';
-            // die();
             }
         }
     }
