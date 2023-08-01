@@ -1,6 +1,6 @@
-<h2>Create Account</h2>
+<h2>Create Account</h2> <p><?php echo $t->_('how are you'), ' ', $name; ?></p>
 
-<?php echo $this->tag->form("signup/register"); ?>
+<?php echo $this->tag->form(["signup/register", "id"=>"signupForm"]); ?>
 
 <div class="form-group">
         <label for="name">Name</label>
@@ -18,12 +18,21 @@
 </div>
 
 <div class="form-group">
-        <label for="password">Role</label>
-        <?php echo $this->tag->passwordField(["role", 'class' => 'form-control']); ?>
+        <label for="role">Role</label>
+        <?php 
+            echo Phalcon\Tag::select(
+                ["role",
+                [   "guest" => "Guest",
+                    "customer" => "Customer",
+                    "admin" => "Admin",
+                ],
+                "class" => "form-control", 1 
+                ]
+            ); ?>
 </div>
     
 <div class="form-group">
         <?php echo $this->tag->submitButton("Register"); ?>
 </div>
-
+<script src="signup.js"></script>
 </form>

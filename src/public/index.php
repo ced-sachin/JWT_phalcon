@@ -11,14 +11,22 @@ use Phalcon\Events\Event;
 use Phalcon\Events\Manager as EventsManager;
 use App\Controllers\SecureController;
 
+
 $config = new Config([]);
 
 // Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
+// require_once __DIR__ . '/../vendor/firebase/php-jwt/src/JWT.php';
+// // require_once __DIR__ . '/../vendor/autoload.php';
+// require_once __DIR__ . '/../vendor/firebase/php-jwt/src/SignatureInvalidException.php';
 
 // Register an autoloader
 $loader = new Loader();
+
+
+
+use Firebase\JWT\JWT;
 
 $loader->registerDirs(
     [
@@ -26,6 +34,13 @@ $loader->registerDirs(
         APP_PATH . "/models/",
     ]
 );
+
+$loader->registerFiles([ BASE_PATH . "/vendor/autoload.php" ]);
+$loader->registerDirs(array(
+    '../app/controllers/',
+    '../app/models/',
+    '../app/plugins/',
+))->register();
 
 $loader->registerNamespaces(
     [

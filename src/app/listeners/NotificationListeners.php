@@ -8,6 +8,7 @@ use Phalcon\Acl\Adapter\Memory;
 use Phalcon\Acl\Role;
 use Phalcon\Acl\Component;
 use Phalcon\Acl\Enum;
+
 // use App\Controllers\SecuresController;
 
 class NotificationListeners 
@@ -27,10 +28,10 @@ class NotificationListeners
                 $role = $application->request->getQuery('role');
                 $controllerName = $application->dispatcher->getControllerName();
                 $actionName = $application->dispatcher->getActionName(); // Get the action name
-
-
+                
+                $actionName = isset($actionName) ? $actionName : 'index'; //
                 // Check if the role is allowed to access the requested controller and action
-                if (!$acl->isAllowed($role, $controllerName, 'index')) {
+                if (!$acl->isAllowed($role, $controllerName, $actionName )) {
                     echo 'Access Denied :(';
                     die;
                 }
@@ -81,16 +82,22 @@ class NotificationListeners
                     'update'
                 ]
             );
-   
-            // Admin will have access to all (product add/edit, order add/edit, settings and all the above pages)
-            // manager will have access to product add/edit and order add/edit
-            // guest will have access to only product view
-            // $acl->allow('*','*','*');
+
+            // Assuming the correct component name is 'some_controller' (replace it with your actual component name)
+            $acl->addComponent(
+                'index',
+                [
+                    'index',  // Add other actions as needed
+                ]
+            );
+            $acl->setDefaultAction(\Phalcon\Acl\Enum::ALLOW);
+            // Allow 'guest' role to access 'some_controller' actions
+            $acl->allow('*', 'index', 'index');   
             $acl->allow('admin', '*', '*');
             $acl->allow('guest', 'products' , ['view']);
             $acl->allow('customer', 'products' , '*');
             $acl->allow('customer', 'orders' ,  '*');
-            
+            // Allow guest role to access the default controller and action           
             // Save the ACL object to the cache file
             file_put_contents($aclFilePath, serialize($acl));
 

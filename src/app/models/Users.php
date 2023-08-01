@@ -2,6 +2,21 @@
 
 use Phalcon\Mvc\Model;
 
+
+// CREATE TABLE `dbphalcon`.`users` (
+//     `id` int NOT NULL,
+//     `name` varchar(255) NOT NULL,
+//     `email` varchar(255) NOT NULL,
+//     `password` varchar(255) NOT NULL,
+//     `role` varchar(255) NOT NULL
+//   ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+//   ALTER TABLE `dbphalcon`.`users` ADD PRIMARY KEY (`id`);
+//   ALTER TABLE `dbphalcon`.`users` MODIFY `id` int NOT NULL AUTO_INCREMENT;
+    
+//   SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+    
+//   INSERT INTO `dbphalcon`.`users`(`id`, `name`, `email`, `password`, `role`) SELECT `id`, `name`, `email`, `password`, `role` FROM `dbphalcon`.`users`;
+
 class Users extends Model
 {
     public $id;
@@ -9,7 +24,6 @@ class Users extends Model
     public $email;
     public $password;
     public $role;
-
     public function login($email, $password)
     {
         // Your authentication logic goes here...
