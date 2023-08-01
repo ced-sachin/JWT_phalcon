@@ -4,32 +4,20 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit9f8ef0d888760c15b60dd2319cb5f719
+class ComposerStaticInitf9509273b553f3bd5879d542d8c8d9f0
 {
-    public static $prefixLengthsPsr4 = array (
-        'F' => 
-        array (
-            'Firebase\\JWT\\' => 13,
-        ),
-    );
-
-    public static $prefixDirsPsr4 = array (
-        'Firebase\\JWT\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/firebase/php-jwt/src',
-        ),
-    );
-
     public static $classMap = array (
+        'BeforeValidException' => __DIR__ . '/..' . '/firebase/php-jwt/Exceptions/BeforeValidException.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+        'ExpiredException' => __DIR__ . '/..' . '/firebase/php-jwt/Exceptions/ExpiredException.php',
+        'JWT' => __DIR__ . '/..' . '/firebase/php-jwt/Authentication/JWT.php',
+        'SignatureInvalidException' => __DIR__ . '/..' . '/firebase/php-jwt/Exceptions/SignatureInvalidException.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit9f8ef0d888760c15b60dd2319cb5f719::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit9f8ef0d888760c15b60dd2319cb5f719::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit9f8ef0d888760c15b60dd2319cb5f719::$classMap;
+            $loader->classMap = ComposerStaticInitf9509273b553f3bd5879d542d8c8d9f0::$classMap;
 
         }, null, ClassLoader::class);
     }

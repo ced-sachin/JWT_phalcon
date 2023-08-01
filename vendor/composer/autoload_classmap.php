@@ -6,5 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'BeforeValidException' => $vendorDir . '/firebase/php-jwt/Exceptions/BeforeValidException.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
+    'ExpiredException' => $vendorDir . '/firebase/php-jwt/Exceptions/ExpiredException.php',
+    'JWT' => $vendorDir . '/firebase/php-jwt/Authentication/JWT.php',
+    'SignatureInvalidException' => $vendorDir . '/firebase/php-jwt/Exceptions/SignatureInvalidException.php',
 );

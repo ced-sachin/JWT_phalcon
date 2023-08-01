@@ -1,5 +1,8 @@
 <?php
+// require __DIR__ . '/../vendor/autoload.php';
 
+
+use Firebase\JWT\JWT;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Loader;
 use Phalcon\Mvc\View;
@@ -11,22 +14,16 @@ use Phalcon\Events\Event;
 use Phalcon\Events\Manager as EventsManager;
 use App\Controllers\SecureController;
 
-
 $config = new Config([]);
 
-// Define some absolute path constants to aid in locating resources
 define('BASE_PATH', dirname(__DIR__));
 define('APP_PATH', BASE_PATH . '/app');
-// require_once __DIR__ . '/../vendor/firebase/php-jwt/src/JWT.php';
-// // require_once __DIR__ . '/../vendor/autoload.php';
-// require_once __DIR__ . '/../vendor/firebase/php-jwt/src/SignatureInvalidException.php';
+// echo __DIR__;
+require_once __DIR__.'/firebase/php-jwt/Authentication/JWT.php';
+// /home/cedcoss/Pictures/JWT_Phalcon/vendor/firebase/php-jwt/Authentication/JWT.php
+require_once __DIR__.'/firebase/php-jwt/Exceptions/SignatureInvalidException.php';
 
-// Register an autoloader
 $loader = new Loader();
-
-
-
-use Firebase\JWT\JWT;
 
 $loader->registerDirs(
     [

@@ -7,7 +7,7 @@ use Phalcon\Translate\Adapter\NativeArray;
 
 class IndexController extends Controller
 {
-    public function indexAction()
+    public function homeAction()
     {
         $this->view->t    = $this->getTranslator();
     }

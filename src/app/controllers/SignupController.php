@@ -1,8 +1,8 @@
 <?php
 
 use Phalcon\Mvc\Controller;
-use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use \Firebase\Authentication\JWT;
+use Phalcon\Security\Random;
 
 class SignupController extends Controller{
 
@@ -16,6 +16,7 @@ class SignupController extends Controller{
         $password = $this->security->hash($formData['password']);
         $email = $formData['email'];
         $role = $formData['role'];
+        
         $user->assign(
             $formData,
             [
@@ -44,13 +45,20 @@ class SignupController extends Controller{
         ];
         $passphrase = 'QcMpZ&b&mo3TPsPk668J6QH8JA$&U&m2';
         $success = $user->save();
-        $jwt = JWT::encode($payload, $passphrase);echo '<pre>';print_r($jwt); die(__METHOD__);
+        $jwt = Jwt::encode($payload, $passphrase);//echo '<pre>';print_r($jwt);//die(__METHOD__);
+        // // Store the JWT token in the session or DI container
+        // $this->session->set('jwtToken', $jwt); // If using Phalcon session
+        // // Alternatively, store the JWT token in the DI container
+        // $this->container->setShared('jwtToken', $jwt);
         $this->view->success = $success;
-
+        
         if($success){
             $this->view->message = "Register succesfully";
+            return $this->response->redirect('products/view?bearer='.$jwt);
         } else {
+            
             $this->view->message = "Not Register succesfully due to following reason: <br>".implode("<br>", $user->getMessages());
+            return $this->response->redirect('index/index');
         }
     }
 }
