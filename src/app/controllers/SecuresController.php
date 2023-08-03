@@ -12,57 +12,49 @@ class SecuresController extends Controller
 {
     public function buildaclAction()
     {
-        $aclFile = APP_PATH.'/security/acl.cache';
-        
-        if(true !== is_file($aclFile)) {
-            $acl = new Memory();
-            $acl->addRole('admin');
-            $acl->addRole('customer');
-            $acl->addRole('guest');
+        $aclDir = APP_PATH . '/security';
+            if (!is_dir($aclDir)) {
+                mkdir($aclDir, 0777, true);
+            }
 
-            $acl->addComponent(
-                'product',
-                [
-                    'index',
-                    'add'
-                ]
-            );
-            $acl->addComponent(
-                'order',
-                [
-                    'index',
-                    'add'
-                ]
-            );
-   
-            $acl->addComponent(
-                'setting',
-                [
-                    'index',
-                    'update'
-                ]
-            );
-   
-            $acl->allow('admin', '*', '*');
-            $acl->allow('customer', 'product', ['index','add']);
-            $acl->allow('customer', 'order', ['index','add']);
-            $acl->allow('guest', 'product', ['index']);
-            $acl->deny('guest','*','*');
-            file_put_contents(
-                $aclFile,
-                serialize($acl)
-            );
-            // echo '<pre>'; print_r($aclFile); die(__METHOD__);
-        } else {
-            $acl = unserialize(
-                file_get_contents($aclFile)
-            );
-        }
+            // $aclFilePath = fopen( $aclDir . '/acl.cache', 'w+' );
+            $aclFilePath = $aclDir . '/acl.cache';
 
-        if(true === $acl->isAllowed('customer','product','index')) {
-            echo 'Access granted';
-        } else {
-            echo 'Access denied :(';
+            if (!is_file($aclFilePath)) {
+                // ... (create and setup ACL object as before)
+                $acl = new Memory();
+
+                $admin = new Role('admin', 'Administrator Access');
+                $customer = new Role('customer', 'Manager Department Access');
+                $guest = new Role('guest', 'Normal User');
+                $acl->addRole($admin);
+                $acl->addRole($customer);
+                $acl->addRole($guest);
+    
+                // Components
+                $components = [
+                    'products' => ['view', 'add', 'edit'],
+                    'orders'   => ['view', 'add', 'edit'],
+                    'settings' => ['view', 'update'],
+                    'index'    => ['home']
+                ];
+    
+                // Allow guest role to access only 'products' component and its 'view' action
+                $acl->addComponent('products', ['view']);
+                $acl->allow('guest', 'products', 'view');
+                $acl->addComponent('index', ['home']);
+                $acl->allow('guest', 'index', 'home');
+    
+                // Allow customer role to access 'products' and 'orders' components and all actions
+                foreach ($components as $component => $actions) {
+                    $acl->addComponent($component, $actions);
+                    $acl->allow('customer', $component, $actions);
+                }
+    
+                // Allow admin role to access all components and actions
+                $acl->allow('admin', '*', '*');
+                file_put_contents($aclFilePath, serialize($acl));
+                echo 'ACL data has been created and saved to acl.cache file.';
+            }
         }
-    }
 }

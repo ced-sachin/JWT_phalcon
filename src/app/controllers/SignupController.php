@@ -16,6 +16,7 @@ class SignupController extends Controller{
         $password = $this->security->hash($formData['password']);
         $email = $formData['email'];
         $role = $formData['role'];
+        $name = $formData['name'];
         
         $user->assign(
             $formData,
@@ -39,8 +40,8 @@ class SignupController extends Controller{
 
         // Generate JWT token
         $payload = [
-            'sub' => $role, // Subject parameter (username in this case)
-            'user' => $email,    // Custom claim 'role'
+            'sub'=> $role, 
+            'user' => $name,    // Custom claim 'role'
             'exp' => time() + (60 * 60) // Token expiration time (1 hour)
         ];
         $passphrase = 'QcMpZ&b&mo3TPsPk668J6QH8JA$&U&m2';
@@ -54,9 +55,9 @@ class SignupController extends Controller{
         
         if($success){
             $this->view->message = "Register succesfully";
-            return $this->response->redirect('products/view?bearer='.$jwt);
+            echo "<script>localStorage.setItem('token', '$jwt');</script>";
+            return $this->response->redirect('products/view?bearer=' . $jwt);
         } else {
-            
             $this->view->message = "Not Register succesfully due to following reason: <br>".implode("<br>", $user->getMessages());
             return $this->response->redirect('index/index');
         }
