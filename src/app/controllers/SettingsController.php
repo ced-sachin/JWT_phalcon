@@ -10,7 +10,7 @@ use Phalcon\Forms\Element\Select;
 
 class SettingsController extends Controller
 {
-    public function indexAction()
+    public function viewAction()
     {  
         $settings = Settings::findFirst(1);
         if($settings) {

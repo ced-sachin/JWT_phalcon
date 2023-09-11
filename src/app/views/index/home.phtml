@@ -1,0 +1,38 @@
+<h2>Create Account</h2> <p><?php echo $t->_('how are you'), ' ', $name; ?></p>
+
+<?php echo $this->tag->form(["signup/register", "id"=>"signupForm"]); ?>
+
+<div class="form-group">
+        <label for="name">Name</label>
+        <?php echo $this->tag->textField(["name", 'class' => 'form-control']); ?>
+</div>
+
+<div class="form-group">
+        <label for="email">E-Mail</label>
+        <?php echo $this->tag->textField(["email", 'class' => 'form-control']); ?>
+</div>
+
+<div class="form-group">
+        <label for="password">Password</label>
+        <?php echo $this->tag->passwordField(["password", 'class' => 'form-control']); ?>
+</div>
+
+<div class="form-group">
+        <label for="role">Role</label>
+        <?php 
+            echo Phalcon\Tag::select(
+                ["role",
+                [   "guest" => "Guest",
+                    "customer" => "Customer",
+                    "admin" => "Admin",
+                ],
+                "class" => "form-control", 1 
+                ]
+            ); ?>
+</div>
+    
+<div class="form-group">
+        <?php echo $this->tag->submitButton("Register"); ?>
+</div>
+<script src="signup.js"></script>
+</form>

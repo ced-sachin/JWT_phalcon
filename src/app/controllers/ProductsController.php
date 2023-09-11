@@ -8,7 +8,7 @@ use Phalcon\Forms\Element\Select;
 
 class ProductsController extends Controller
 {
-    public function indexAction()
+    public function viewAction()
     {   
         $this->view->products = Products::find();
     }
